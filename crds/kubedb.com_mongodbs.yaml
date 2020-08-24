@@ -3815,13 +3815,13 @@ spec:
                       - volumePath
                       type: object
                   type: object
-                stashRestoreSession:
-                  description: 'Name of stash restoreSession in same namespace of
-                    kubedb object. ref: https://github.com/stashed/stash/blob/09af5d319bb5be889186965afb04045781d6f926/apis/stash/v1beta1/restore_session_types.go#L22'
+                stash:
+                  description: 'Kind & Name of stash restoreSession in same namespace
+                    of kubedb object. ref: https://github.com/stashed/stash/blob/09af5d319bb5be889186965afb04045781d6f926/apis/stash/v1beta1/restore_session_types.go#L22'
                   properties:
+                    kind:
+                      type: string
                     name:
-                      description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-                        TODO: Add other useful fields. apiVersion, kind, uid?'
                       type: string
                   type: object
               type: object

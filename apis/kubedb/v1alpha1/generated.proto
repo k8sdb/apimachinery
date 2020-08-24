@@ -372,9 +372,9 @@ message InitSpec {
 
   optional PostgresWALSourceSpec postgresWAL = 3;
 
-  // Name of stash restoreSession in same namespace of kubedb object.
+  // Kind & Name of stash restoreSession in same namespace of kubedb object.
   // ref: https://github.com/stashed/stash/blob/09af5d319bb5be889186965afb04045781d6f926/apis/stash/v1beta1/restore_session_types.go#L22
-  optional k8s.io.api.core.v1.LocalObjectReference stashRestoreSession = 4;
+  optional StashRestoreInvoker stash = 4;
 }
 
 // LeaderElectionConfig contains essential attributes of leader election.
@@ -1383,6 +1383,12 @@ message ScriptSourceSpec {
   optional string scriptPath = 1;
 
   optional k8s.io.api.core.v1.VolumeSource volumeSource = 2;
+}
+
+message StashRestoreInvoker {
+  optional string kind = 1;
+
+  optional string name = 2;
 }
 
 message TLSConfig {

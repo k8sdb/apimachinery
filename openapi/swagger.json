@@ -28789,9 +28789,9 @@
         "scriptSource": {
           "$ref": "#/definitions/dev.kubedb.apimachinery.apis.kubedb.v1alpha1.ScriptSourceSpec"
         },
-        "stashRestoreSession": {
-          "description": "Name of stash restoreSession in same namespace of kubedb object. ref: https://github.com/stashed/stash/blob/09af5d319bb5be889186965afb04045781d6f926/apis/stash/v1beta1/restore_session_types.go#L22",
-          "$ref": "#/definitions/io.k8s.api.core.v1.LocalObjectReference"
+        "stash": {
+          "description": "Kind \u0026 Name of stash restoreSession in same namespace of kubedb object. ref: https://github.com/stashed/stash/blob/09af5d319bb5be889186965afb04045781d6f926/apis/stash/v1beta1/restore_session_types.go#L22",
+          "$ref": "#/definitions/dev.kubedb.apimachinery.apis.kubedb.v1alpha1.StashRestoreInvoker"
         }
       }
     },
@@ -30507,6 +30507,17 @@
         "vsphereVolume": {
           "description": "VsphereVolume represents a vSphere volume attached and mounted on kubelets host machine",
           "$ref": "#/definitions/io.k8s.api.core.v1.VsphereVirtualDiskVolumeSource"
+        }
+      }
+    },
+    "dev.kubedb.apimachinery.apis.kubedb.v1alpha1.StashRestoreInvoker": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
         }
       }
     },

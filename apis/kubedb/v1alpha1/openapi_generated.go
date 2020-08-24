@@ -437,6 +437,7 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		"kubedb.dev/apimachinery/apis/kubedb/v1alpha1.RedisSpec":                      schema_apimachinery_apis_kubedb_v1alpha1_RedisSpec(ref),
 		"kubedb.dev/apimachinery/apis/kubedb/v1alpha1.RedisStatus":                    schema_apimachinery_apis_kubedb_v1alpha1_RedisStatus(ref),
 		"kubedb.dev/apimachinery/apis/kubedb/v1alpha1.ScriptSourceSpec":               schema_apimachinery_apis_kubedb_v1alpha1_ScriptSourceSpec(ref),
+		"kubedb.dev/apimachinery/apis/kubedb/v1alpha1.StashRestoreInvoker":            schema_apimachinery_apis_kubedb_v1alpha1_StashRestoreInvoker(ref),
 		"kubedb.dev/apimachinery/apis/kubedb/v1alpha1.TLSConfig":                      schema_apimachinery_apis_kubedb_v1alpha1_TLSConfig(ref),
 		"kubedb.dev/apimachinery/apis/kubedb/v1alpha1.TLSPolicy":                      schema_apimachinery_apis_kubedb_v1alpha1_TLSPolicy(ref),
 		"kubedb.dev/apimachinery/apis/kubedb/v1alpha1.X509Subject":                    schema_apimachinery_apis_kubedb_v1alpha1_X509Subject(ref),
@@ -18704,17 +18705,17 @@ func schema_apimachinery_apis_kubedb_v1alpha1_InitSpec(ref common.ReferenceCallb
 							Ref: ref("kubedb.dev/apimachinery/apis/kubedb/v1alpha1.PostgresWALSourceSpec"),
 						},
 					},
-					"stashRestoreSession": {
+					"stash": {
 						SchemaProps: spec.SchemaProps{
-							Description: "Name of stash restoreSession in same namespace of kubedb object. ref: https://github.com/stashed/stash/blob/09af5d319bb5be889186965afb04045781d6f926/apis/stash/v1beta1/restore_session_types.go#L22",
-							Ref:         ref("k8s.io/api/core/v1.LocalObjectReference"),
+							Description: "Kind & Name of stash restoreSession in same namespace of kubedb object. ref: https://github.com/stashed/stash/blob/09af5d319bb5be889186965afb04045781d6f926/apis/stash/v1beta1/restore_session_types.go#L22",
+							Ref:         ref("kubedb.dev/apimachinery/apis/kubedb/v1alpha1.StashRestoreInvoker"),
 						},
 					},
 				},
 			},
 		},
 		Dependencies: []string{
-			"k8s.io/api/core/v1.LocalObjectReference", "kubedb.dev/apimachinery/apis/kubedb/v1alpha1.PostgresWALSourceSpec", "kubedb.dev/apimachinery/apis/kubedb/v1alpha1.ScriptSourceSpec"},
+			"kubedb.dev/apimachinery/apis/kubedb/v1alpha1.PostgresWALSourceSpec", "kubedb.dev/apimachinery/apis/kubedb/v1alpha1.ScriptSourceSpec", "kubedb.dev/apimachinery/apis/kubedb/v1alpha1.StashRestoreInvoker"},
 	}
 }
 
@@ -21539,6 +21540,30 @@ func schema_apimachinery_apis_kubedb_v1alpha1_ScriptSourceSpec(ref common.Refere
 		},
 		Dependencies: []string{
 			"k8s.io/api/core/v1.AWSElasticBlockStoreVolumeSource", "k8s.io/api/core/v1.AzureDiskVolumeSource", "k8s.io/api/core/v1.AzureFileVolumeSource", "k8s.io/api/core/v1.CSIVolumeSource", "k8s.io/api/core/v1.CephFSVolumeSource", "k8s.io/api/core/v1.CinderVolumeSource", "k8s.io/api/core/v1.ConfigMapVolumeSource", "k8s.io/api/core/v1.DownwardAPIVolumeSource", "k8s.io/api/core/v1.EmptyDirVolumeSource", "k8s.io/api/core/v1.FCVolumeSource", "k8s.io/api/core/v1.FlexVolumeSource", "k8s.io/api/core/v1.FlockerVolumeSource", "k8s.io/api/core/v1.GCEPersistentDiskVolumeSource", "k8s.io/api/core/v1.GitRepoVolumeSource", "k8s.io/api/core/v1.GlusterfsVolumeSource", "k8s.io/api/core/v1.HostPathVolumeSource", "k8s.io/api/core/v1.ISCSIVolumeSource", "k8s.io/api/core/v1.NFSVolumeSource", "k8s.io/api/core/v1.PersistentVolumeClaimVolumeSource", "k8s.io/api/core/v1.PhotonPersistentDiskVolumeSource", "k8s.io/api/core/v1.PortworxVolumeSource", "k8s.io/api/core/v1.ProjectedVolumeSource", "k8s.io/api/core/v1.QuobyteVolumeSource", "k8s.io/api/core/v1.RBDVolumeSource", "k8s.io/api/core/v1.ScaleIOVolumeSource", "k8s.io/api/core/v1.SecretVolumeSource", "k8s.io/api/core/v1.StorageOSVolumeSource", "k8s.io/api/core/v1.VsphereVirtualDiskVolumeSource"},
+	}
+}
+
+func schema_apimachinery_apis_kubedb_v1alpha1_StashRestoreInvoker(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+				Properties: map[string]spec.Schema{
+					"kind": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"name": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+				},
+			},
+		},
 	}
 }
 

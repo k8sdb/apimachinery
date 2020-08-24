@@ -24,14 +24,19 @@ import (
 type InitSpec struct {
 	ScriptSource *ScriptSourceSpec      `json:"scriptSource,omitempty" protobuf:"bytes,1,opt,name=scriptSource"`
 	PostgresWAL  *PostgresWALSourceSpec `json:"postgresWAL,omitempty" protobuf:"bytes,3,opt,name=postgresWAL"`
-	// Name of stash restoreSession in same namespace of kubedb object.
+	// Kind & Name of stash restoreSession in same namespace of kubedb object.
 	// ref: https://github.com/stashed/stash/blob/09af5d319bb5be889186965afb04045781d6f926/apis/stash/v1beta1/restore_session_types.go#L22
-	StashRestoreSession *core.LocalObjectReference `json:"stashRestoreSession,omitempty" protobuf:"bytes,4,opt,name=stashRestoreSession"`
+	Stash *StashRestoreInvoker `json:"stash,omitempty" protobuf:"bytes,4,opt,name=stash"`
 }
 
 type ScriptSourceSpec struct {
 	ScriptPath        string `json:"scriptPath,omitempty" protobuf:"bytes,1,opt,name=scriptPath"`
 	core.VolumeSource `json:",inline,omitempty" protobuf:"bytes,2,opt,name=volumeSource"`
+}
+
+type StashRestoreInvoker struct {
+	Kind string `json:"kind,omitempty" protobuf:"bytes,1,opt,name=kind"`
+	Name string `json:"name,omitempty" protobuf:"bytes,2,opt,name=name"`
 }
 
 // LeaderElectionConfig contains essential attributes of leader election.
