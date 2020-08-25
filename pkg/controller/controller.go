@@ -77,6 +77,10 @@ type Config struct {
 	RSQueue    *queue.Worker
 	RSInformer cache.SharedIndexInformer
 
+	// restoreBatch queue
+	RBQueue    *queue.Worker
+	RBInformer cache.SharedIndexInformer
+
 	// Secret
 	SecretInformer cache.SharedIndexInformer
 	SecretLister   corelisters.SecretLister
