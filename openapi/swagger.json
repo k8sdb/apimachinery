@@ -30360,6 +30360,10 @@
           "description": "Monitor is used monitor database instance",
           "$ref": "#/definitions/xyz.kmodules.monitoring-agent-api.api.v1.AgentSpec"
         },
+        "paused": {
+          "description": "Indicates that the database is paused and controller will not sync any changes made to this spec.",
+          "type": "boolean"
+        },
         "podTemplate": {
           "description": "PodTemplate is an optional configuration for pods used to expose database",
           "$ref": "#/definitions/xyz.kmodules.offshoot-api.api.v1.PodTemplateSpec"
@@ -31683,6 +31687,10 @@
         "verticalScaling": {
           "description": "Specifies information necessary for vertical scaling",
           "$ref": "#/definitions/dev.kubedb.apimachinery.apis.ops.v1alpha1.RedisVerticalScalingSpec"
+        },
+        "volumeExpansion": {
+          "description": "Specifies information necessary for volume expansion",
+          "$ref": "#/definitions/dev.kubedb.apimachinery.apis.ops.v1alpha1.RedisVolumeExpansionSpec"
         }
       }
     },
@@ -31716,6 +31724,15 @@
         },
         "redis": {
           "$ref": "#/definitions/io.k8s.api.core.v1.ResourceRequirements"
+        }
+      }
+    },
+    "dev.kubedb.apimachinery.apis.ops.v1alpha1.RedisVolumeExpansionSpec": {
+      "description": "RedisVolumeExpansionSpec is the spec for Redis volume expansion",
+      "type": "object",
+      "properties": {
+        "redis": {
+          "$ref": "#/definitions/io.k8s.apimachinery.pkg.api.resource.Quantity"
         }
       }
     },

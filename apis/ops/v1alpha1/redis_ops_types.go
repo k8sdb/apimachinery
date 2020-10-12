@@ -18,6 +18,7 @@ package v1alpha1
 
 import (
 	v1 "k8s.io/api/core/v1"
+	"k8s.io/apimachinery/pkg/api/resource"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	kmapi "kmodules.xyz/client-go/api/v1"
 )
@@ -60,6 +61,8 @@ type RedisOpsRequestSpec struct {
 	HorizontalScaling *RedisHorizontalScalingSpec `json:"horizontalScaling,omitempty" protobuf:"bytes,4,opt,name=horizontalScaling"`
 	// Specifies information necessary for vertical scaling
 	VerticalScaling *RedisVerticalScalingSpec `json:"verticalScaling,omitempty" protobuf:"bytes,5,opt,name=verticalScaling"`
+	// Specifies information necessary for volume expansion
+	VolumeExpansion *RedisVolumeExpansionSpec `json:"volumeExpansion,omitempty" protobuf:"bytes,6,opt,name=volumeExpansion"`
 }
 
 type RedisHorizontalScalingSpec struct {
@@ -73,6 +76,11 @@ type RedisHorizontalScalingSpec struct {
 type RedisVerticalScalingSpec struct {
 	Redis    *v1.ResourceRequirements `json:"redis,omitempty" protobuf:"bytes,1,opt,name=redis"`
 	Exporter *v1.ResourceRequirements `json:"exporter,omitempty" protobuf:"bytes,2,opt,name=exporter"`
+}
+
+// RedisVolumeExpansionSpec is the spec for Redis volume expansion
+type RedisVolumeExpansionSpec struct {
+	Redis *resource.Quantity `json:"redis,omitempty" protobuf:"bytes,1,opt,name=redis"`
 }
 
 // RedisOpsRequestStatus is the status for RedisOpsRequest
