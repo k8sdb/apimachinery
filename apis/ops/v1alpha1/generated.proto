@@ -608,6 +608,9 @@ message RedisOpsRequestSpec {
 
   // Specifies information necessary for vertical scaling
   optional RedisVerticalScalingSpec verticalScaling = 5;
+
+  // Specifies information necessary for volume expansion
+  optional RedisVolumeExpansionSpec volumeExpansion = 6;
 }
 
 // RedisOpsRequestStatus is the status for RedisOpsRequest
@@ -629,6 +632,11 @@ message RedisVerticalScalingSpec {
   optional k8s.io.api.core.v1.ResourceRequirements redis = 1;
 
   optional k8s.io.api.core.v1.ResourceRequirements exporter = 2;
+}
+
+// RedisVolumeExpansionSpec is the spec for Redis volume expansion
+message RedisVolumeExpansionSpec {
+  optional k8s.io.apimachinery.pkg.api.resource.Quantity redis = 1;
 }
 
 message UpgradeSpec {

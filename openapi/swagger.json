@@ -31699,6 +31699,10 @@
         "verticalScaling": {
           "description": "Specifies information necessary for vertical scaling",
           "$ref": "#/definitions/dev.kubedb.apimachinery.apis.ops.v1alpha1.RedisVerticalScalingSpec"
+        },
+        "volumeExpansion": {
+          "description": "Specifies information necessary for volume expansion",
+          "$ref": "#/definitions/dev.kubedb.apimachinery.apis.ops.v1alpha1.RedisVolumeExpansionSpec"
         }
       }
     },
@@ -31732,6 +31736,15 @@
         },
         "redis": {
           "$ref": "#/definitions/io.k8s.api.core.v1.ResourceRequirements"
+        }
+      }
+    },
+    "dev.kubedb.apimachinery.apis.ops.v1alpha1.RedisVolumeExpansionSpec": {
+      "description": "RedisVolumeExpansionSpec is the spec for Redis volume expansion",
+      "type": "object",
+      "properties": {
+        "redis": {
+          "$ref": "#/definitions/io.k8s.apimachinery.pkg.api.resource.Quantity"
         }
       }
     },
