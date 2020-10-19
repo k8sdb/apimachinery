@@ -21,6 +21,7 @@ import (
 	"k8s.io/apimachinery/pkg/api/resource"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	kmapi "kmodules.xyz/client-go/api/v1"
+	ofst "kmodules.xyz/offshoot-api/api/v1"
 )
 
 const (
@@ -63,6 +64,8 @@ type RedisOpsRequestSpec struct {
 	VerticalScaling *RedisVerticalScalingSpec `json:"verticalScaling,omitempty" protobuf:"bytes,5,opt,name=verticalScaling"`
 	// Specifies information necessary for volume expansion
 	VolumeExpansion *RedisVolumeExpansionSpec `json:"volumeExpansion,omitempty" protobuf:"bytes,6,opt,name=volumeExpansion"`
+	// Specifies information necessary for custom configuration of Redis
+	Configuration *RedisCustomConfigurationSpec `json:"configuration,omitempty" protobuf:"bytes,7,opt,name=configuration"`
 }
 
 type RedisHorizontalScalingSpec struct {
@@ -81,6 +84,19 @@ type RedisVerticalScalingSpec struct {
 // RedisVolumeExpansionSpec is the spec for Redis volume expansion
 type RedisVolumeExpansionSpec struct {
 	Redis *resource.Quantity `json:"redis,omitempty" protobuf:"bytes,1,opt,name=redis"`
+}
+
+type RedisCustomConfigurationSpec struct {
+	Redis *RedisCustomConfiguration `json:"redis,omitempty" protobuf:"bytes,1,opt,name=redis"`
+}
+
+type RedisCustomConfiguration struct {
+	// PodTemplate is an optional configuration for pods used to expose database
+	// +optional
+	PodTemplate        ofst.PodTemplateSpec     `json:"podTemplate,omitempty" protobuf:"bytes,1,opt,name=podTemplate"`
+	ConfigSource       *v1.LocalObjectReference `json:"configSource,omitempty" protobuf:"bytes,2,opt,name=configSource"`
+	InlineConfig       string                   `json:"inlineConfig,omitempty" protobuf:"bytes,3,opt,name=inlineConfig"`
+	RemoveCustomConfig bool                     `json:"removeCustomConfig,omitempty" protobuf:"varint,4,opt,name=removeCustomConfig"`
 }
 
 // RedisOpsRequestStatus is the status for RedisOpsRequest

@@ -31585,6 +31585,32 @@
         }
       }
     },
+    "dev.kubedb.apimachinery.apis.ops.v1alpha1.RedisCustomConfiguration": {
+      "type": "object",
+      "properties": {
+        "configSource": {
+          "$ref": "#/definitions/io.k8s.api.core.v1.LocalObjectReference"
+        },
+        "inlineConfig": {
+          "type": "string"
+        },
+        "podTemplate": {
+          "description": "PodTemplate is an optional configuration for pods used to expose database",
+          "$ref": "#/definitions/xyz.kmodules.offshoot-api.api.v1.PodTemplateSpec"
+        },
+        "removeCustomConfig": {
+          "type": "boolean"
+        }
+      }
+    },
+    "dev.kubedb.apimachinery.apis.ops.v1alpha1.RedisCustomConfigurationSpec": {
+      "type": "object",
+      "properties": {
+        "redis": {
+          "$ref": "#/definitions/dev.kubedb.apimachinery.apis.ops.v1alpha1.RedisCustomConfiguration"
+        }
+      }
+    },
     "dev.kubedb.apimachinery.apis.ops.v1alpha1.RedisHorizontalScalingSpec": {
       "type": "object",
       "properties": {
@@ -31668,6 +31694,10 @@
         "type"
       ],
       "properties": {
+        "configuration": {
+          "description": "Specifies information necessary for custom configuration of Redis",
+          "$ref": "#/definitions/dev.kubedb.apimachinery.apis.ops.v1alpha1.RedisCustomConfigurationSpec"
+        },
         "databaseRef": {
           "description": "Specifies the Redis reference",
           "$ref": "#/definitions/io.k8s.api.core.v1.LocalObjectReference"

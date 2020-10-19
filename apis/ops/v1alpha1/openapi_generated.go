@@ -442,6 +442,8 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		"kubedb.dev/apimachinery/apis/ops/v1alpha1.ProxySQLOpsRequestList":             schema_apimachinery_apis_ops_v1alpha1_ProxySQLOpsRequestList(ref),
 		"kubedb.dev/apimachinery/apis/ops/v1alpha1.ProxySQLOpsRequestSpec":             schema_apimachinery_apis_ops_v1alpha1_ProxySQLOpsRequestSpec(ref),
 		"kubedb.dev/apimachinery/apis/ops/v1alpha1.ProxySQLOpsRequestStatus":           schema_apimachinery_apis_ops_v1alpha1_ProxySQLOpsRequestStatus(ref),
+		"kubedb.dev/apimachinery/apis/ops/v1alpha1.RedisCustomConfiguration":           schema_apimachinery_apis_ops_v1alpha1_RedisCustomConfiguration(ref),
+		"kubedb.dev/apimachinery/apis/ops/v1alpha1.RedisCustomConfigurationSpec":       schema_apimachinery_apis_ops_v1alpha1_RedisCustomConfigurationSpec(ref),
 		"kubedb.dev/apimachinery/apis/ops/v1alpha1.RedisHorizontalScalingSpec":         schema_apimachinery_apis_ops_v1alpha1_RedisHorizontalScalingSpec(ref),
 		"kubedb.dev/apimachinery/apis/ops/v1alpha1.RedisOpsRequest":                    schema_apimachinery_apis_ops_v1alpha1_RedisOpsRequest(ref),
 		"kubedb.dev/apimachinery/apis/ops/v1alpha1.RedisOpsRequestList":                schema_apimachinery_apis_ops_v1alpha1_RedisOpsRequestList(ref),
@@ -20604,6 +20606,62 @@ func schema_apimachinery_apis_ops_v1alpha1_ProxySQLOpsRequestStatus(ref common.R
 	}
 }
 
+func schema_apimachinery_apis_ops_v1alpha1_RedisCustomConfiguration(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+				Properties: map[string]spec.Schema{
+					"podTemplate": {
+						SchemaProps: spec.SchemaProps{
+							Description: "PodTemplate is an optional configuration for pods used to expose database",
+							Ref:         ref("kmodules.xyz/offshoot-api/api/v1.PodTemplateSpec"),
+						},
+					},
+					"configSource": {
+						SchemaProps: spec.SchemaProps{
+							Ref: ref("k8s.io/api/core/v1.LocalObjectReference"),
+						},
+					},
+					"inlineConfig": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"removeCustomConfig": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"boolean"},
+							Format: "",
+						},
+					},
+				},
+			},
+		},
+		Dependencies: []string{
+			"k8s.io/api/core/v1.LocalObjectReference", "kmodules.xyz/offshoot-api/api/v1.PodTemplateSpec"},
+	}
+}
+
+func schema_apimachinery_apis_ops_v1alpha1_RedisCustomConfigurationSpec(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+				Properties: map[string]spec.Schema{
+					"redis": {
+						SchemaProps: spec.SchemaProps{
+							Ref: ref("kubedb.dev/apimachinery/apis/ops/v1alpha1.RedisCustomConfiguration"),
+						},
+					},
+				},
+			},
+		},
+		Dependencies: []string{
+			"kubedb.dev/apimachinery/apis/ops/v1alpha1.RedisCustomConfiguration"},
+	}
+}
+
 func schema_apimachinery_apis_ops_v1alpha1_RedisHorizontalScalingSpec(ref common.ReferenceCallback) common.OpenAPIDefinition {
 	return common.OpenAPIDefinition{
 		Schema: spec.Schema{
@@ -20764,12 +20822,18 @@ func schema_apimachinery_apis_ops_v1alpha1_RedisOpsRequestSpec(ref common.Refere
 							Ref:         ref("kubedb.dev/apimachinery/apis/ops/v1alpha1.RedisVolumeExpansionSpec"),
 						},
 					},
+					"configuration": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Specifies information necessary for custom configuration of Redis",
+							Ref:         ref("kubedb.dev/apimachinery/apis/ops/v1alpha1.RedisCustomConfigurationSpec"),
+						},
+					},
 				},
 				Required: []string{"databaseRef", "type"},
 			},
 		},
 		Dependencies: []string{
-			"k8s.io/api/core/v1.LocalObjectReference", "kubedb.dev/apimachinery/apis/ops/v1alpha1.RedisHorizontalScalingSpec", "kubedb.dev/apimachinery/apis/ops/v1alpha1.RedisVerticalScalingSpec", "kubedb.dev/apimachinery/apis/ops/v1alpha1.RedisVolumeExpansionSpec", "kubedb.dev/apimachinery/apis/ops/v1alpha1.UpgradeSpec"},
+			"k8s.io/api/core/v1.LocalObjectReference", "kubedb.dev/apimachinery/apis/ops/v1alpha1.RedisCustomConfigurationSpec", "kubedb.dev/apimachinery/apis/ops/v1alpha1.RedisHorizontalScalingSpec", "kubedb.dev/apimachinery/apis/ops/v1alpha1.RedisVerticalScalingSpec", "kubedb.dev/apimachinery/apis/ops/v1alpha1.RedisVolumeExpansionSpec", "kubedb.dev/apimachinery/apis/ops/v1alpha1.UpgradeSpec"},
 	}
 }
 
