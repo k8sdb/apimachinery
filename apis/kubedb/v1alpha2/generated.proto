@@ -1382,6 +1382,39 @@ message RedisList {
   repeated Redis items = 2;
 }
 
+// +kubebuilder:object:root=true
+// +kubebuilder:resource:path=redissentinels,singular=redissentinel,shortName=rdsentinel,categories={datastore,kubedb,appscode,all}
+// +kubebuilder:subresource:status
+// +kubebuilder:printcolumn:name="Age",type="date",JSONPath=".metadata.creationTimestamp"
+message RedisSentinel {
+  optional k8s.io.apimachinery.pkg.apis.meta.v1.ObjectMeta metadata = 1;
+
+  optional RedisSentinelSpec spec = 2;
+
+  optional RedisSentinelStatus status = 3;
+}
+
+message RedisSentinelList {
+  optional k8s.io.apimachinery.pkg.apis.meta.v1.ListMeta metadata = 1;
+
+  // Items is a list of RedisSentinel TPR objects
+  repeated RedisSentinel items = 2;
+}
+
+message RedisSentinelSpec {
+}
+
+message RedisSentinelStatus {
+  // observedGeneration is the most recent generation observed for this resource. It corresponds to the
+  // resource's generation, which is updated on mutation by the API Server.
+  // +optional
+  optional int64 observedGeneration = 2;
+
+  // Conditions applied to the database, such as approval or denial.
+  // +optional
+  repeated kmodules.xyz.client_go.api.v1.Condition conditions = 3;
+}
+
 message RedisSpec {
   // Version of Redis to be deployed.
   optional string version = 1;

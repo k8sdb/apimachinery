@@ -464,6 +464,10 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		"kubedb.dev/apimachinery/apis/kubedb/v1alpha2.Redis":                          schema_apimachinery_apis_kubedb_v1alpha2_Redis(ref),
 		"kubedb.dev/apimachinery/apis/kubedb/v1alpha2.RedisClusterSpec":               schema_apimachinery_apis_kubedb_v1alpha2_RedisClusterSpec(ref),
 		"kubedb.dev/apimachinery/apis/kubedb/v1alpha2.RedisList":                      schema_apimachinery_apis_kubedb_v1alpha2_RedisList(ref),
+		"kubedb.dev/apimachinery/apis/kubedb/v1alpha2.RedisSentinel":                  schema_apimachinery_apis_kubedb_v1alpha2_RedisSentinel(ref),
+		"kubedb.dev/apimachinery/apis/kubedb/v1alpha2.RedisSentinelList":              schema_apimachinery_apis_kubedb_v1alpha2_RedisSentinelList(ref),
+		"kubedb.dev/apimachinery/apis/kubedb/v1alpha2.RedisSentinelSpec":              schema_apimachinery_apis_kubedb_v1alpha2_RedisSentinelSpec(ref),
+		"kubedb.dev/apimachinery/apis/kubedb/v1alpha2.RedisSentinelStatus":            schema_apimachinery_apis_kubedb_v1alpha2_RedisSentinelStatus(ref),
 		"kubedb.dev/apimachinery/apis/kubedb/v1alpha2.RedisSpec":                      schema_apimachinery_apis_kubedb_v1alpha2_RedisSpec(ref),
 		"kubedb.dev/apimachinery/apis/kubedb/v1alpha2.RedisStatus":                    schema_apimachinery_apis_kubedb_v1alpha2_RedisStatus(ref),
 		"kubedb.dev/apimachinery/apis/kubedb/v1alpha2.ScriptSourceSpec":               schema_apimachinery_apis_kubedb_v1alpha2_ScriptSourceSpec(ref),
@@ -22402,6 +22406,139 @@ func schema_apimachinery_apis_kubedb_v1alpha2_RedisList(ref common.ReferenceCall
 		},
 		Dependencies: []string{
 			"k8s.io/apimachinery/pkg/apis/meta/v1.ListMeta", "kubedb.dev/apimachinery/apis/kubedb/v1alpha2.Redis"},
+	}
+}
+
+func schema_apimachinery_apis_kubedb_v1alpha2_RedisSentinel(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+				Properties: map[string]spec.Schema{
+					"kind": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"apiVersion": {
+						SchemaProps: spec.SchemaProps{
+							Description: "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"metadata": {
+						SchemaProps: spec.SchemaProps{
+							Ref: ref("k8s.io/apimachinery/pkg/apis/meta/v1.ObjectMeta"),
+						},
+					},
+					"spec": {
+						SchemaProps: spec.SchemaProps{
+							Ref: ref("kubedb.dev/apimachinery/apis/kubedb/v1alpha2.RedisSentinelSpec"),
+						},
+					},
+					"status": {
+						SchemaProps: spec.SchemaProps{
+							Ref: ref("kubedb.dev/apimachinery/apis/kubedb/v1alpha2.RedisSentinelStatus"),
+						},
+					},
+				},
+			},
+		},
+		Dependencies: []string{
+			"k8s.io/apimachinery/pkg/apis/meta/v1.ObjectMeta", "kubedb.dev/apimachinery/apis/kubedb/v1alpha2.RedisSentinelSpec", "kubedb.dev/apimachinery/apis/kubedb/v1alpha2.RedisSentinelStatus"},
+	}
+}
+
+func schema_apimachinery_apis_kubedb_v1alpha2_RedisSentinelList(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+				Properties: map[string]spec.Schema{
+					"kind": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"apiVersion": {
+						SchemaProps: spec.SchemaProps{
+							Description: "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"metadata": {
+						SchemaProps: spec.SchemaProps{
+							Ref: ref("k8s.io/apimachinery/pkg/apis/meta/v1.ListMeta"),
+						},
+					},
+					"items": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Items is a list of RedisSentinel TPR objects",
+							Type:        []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Ref: ref("kubedb.dev/apimachinery/apis/kubedb/v1alpha2.RedisSentinel"),
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+		},
+		Dependencies: []string{
+			"k8s.io/apimachinery/pkg/apis/meta/v1.ListMeta", "kubedb.dev/apimachinery/apis/kubedb/v1alpha2.RedisSentinel"},
+	}
+}
+
+func schema_apimachinery_apis_kubedb_v1alpha2_RedisSentinelSpec(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+			},
+		},
+	}
+}
+
+func schema_apimachinery_apis_kubedb_v1alpha2_RedisSentinelStatus(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+				Properties: map[string]spec.Schema{
+					"observedGeneration": {
+						SchemaProps: spec.SchemaProps{
+							Description: "observedGeneration is the most recent generation observed for this resource. It corresponds to the resource's generation, which is updated on mutation by the API Server.",
+							Type:        []string{"integer"},
+							Format:      "int64",
+						},
+					},
+					"conditions": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Conditions applied to the database, such as approval or denial.",
+							Type:        []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Ref: ref("kmodules.xyz/client-go/api/v1.Condition"),
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+		},
+		Dependencies: []string{
+			"kmodules.xyz/client-go/api/v1.Condition"},
 	}
 }
 
