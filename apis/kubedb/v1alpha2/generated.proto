@@ -1402,9 +1402,24 @@ message RedisSentinelList {
 }
 
 message RedisSentinelSpec {
+  // Add new fields here
+  // Number of instances to deploy for a Redis database.
+  optional int32 replicas = 1;
+
+  // PodTemplate is an optional configuration for pods used to expose database
+  // +optional
+  optional kmodules.xyz.offshoot_api.api.v1.PodTemplateSpec podTemplate = 2;
+
+  // ServiceTemplates is an optional configuration for services used to expose database
+  // +optional
+  repeated NamedServiceTemplateSpec serviceTemplates = 3;
 }
 
 message RedisSentinelStatus {
+  // Specifies the current phase of the database
+  // +optional
+  optional string phase = 1;
+
   // observedGeneration is the most recent generation observed for this resource. It corresponds to the
   // resource's generation, which is updated on mutation by the API Server.
   // +optional
