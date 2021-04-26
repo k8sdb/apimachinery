@@ -493,6 +493,8 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		"kubedb.dev/apimachinery/apis/kubedb/v1alpha2.proxysqlApp":                    schema_apimachinery_apis_kubedb_v1alpha2_proxysqlApp(ref),
 		"kubedb.dev/apimachinery/apis/kubedb/v1alpha2.proxysqlStatsService":           schema_apimachinery_apis_kubedb_v1alpha2_proxysqlStatsService(ref),
 		"kubedb.dev/apimachinery/apis/kubedb/v1alpha2.redisApp":                       schema_apimachinery_apis_kubedb_v1alpha2_redisApp(ref),
+		"kubedb.dev/apimachinery/apis/kubedb/v1alpha2.redisSentinelApp":               schema_apimachinery_apis_kubedb_v1alpha2_redisSentinelApp(ref),
+		"kubedb.dev/apimachinery/apis/kubedb/v1alpha2.redisSentinelStatsService":      schema_apimachinery_apis_kubedb_v1alpha2_redisSentinelStatsService(ref),
 		"kubedb.dev/apimachinery/apis/kubedb/v1alpha2.redisStatsService":              schema_apimachinery_apis_kubedb_v1alpha2_redisStatsService(ref),
 	}
 }
@@ -23368,6 +23370,46 @@ func schema_apimachinery_apis_kubedb_v1alpha2_redisApp(ref common.ReferenceCallb
 		},
 		Dependencies: []string{
 			"kubedb.dev/apimachinery/apis/kubedb/v1alpha2.Redis"},
+	}
+}
+
+func schema_apimachinery_apis_kubedb_v1alpha2_redisSentinelApp(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+				Properties: map[string]spec.Schema{
+					"RedisSentinel": {
+						SchemaProps: spec.SchemaProps{
+							Ref: ref("kubedb.dev/apimachinery/apis/kubedb/v1alpha2.RedisSentinel"),
+						},
+					},
+				},
+				Required: []string{"RedisSentinel"},
+			},
+		},
+		Dependencies: []string{
+			"kubedb.dev/apimachinery/apis/kubedb/v1alpha2.RedisSentinel"},
+	}
+}
+
+func schema_apimachinery_apis_kubedb_v1alpha2_redisSentinelStatsService(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+				Properties: map[string]spec.Schema{
+					"RedisSentinel": {
+						SchemaProps: spec.SchemaProps{
+							Ref: ref("kubedb.dev/apimachinery/apis/kubedb/v1alpha2.RedisSentinel"),
+						},
+					},
+				},
+				Required: []string{"RedisSentinel"},
+			},
+		},
+		Dependencies: []string{
+			"kubedb.dev/apimachinery/apis/kubedb/v1alpha2.RedisSentinel"},
 	}
 }
 

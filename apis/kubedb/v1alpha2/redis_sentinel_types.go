@@ -22,6 +22,13 @@ import (
 	ofst "kmodules.xyz/offshoot-api/api/v1"
 )
 
+const (
+	ResourceCodeRedisSentinel     = "rds"
+	ResourceKindRedisSentinel     = "RedisSentinel"
+	ResourceSingularRedisSentinel = "redissentinel"
+	ResourcePluralRedisSentinel   = "redissentinels"
+)
+
 // RedisSentinel defines a Sentinel for Redis database.
 
 // +genclient
