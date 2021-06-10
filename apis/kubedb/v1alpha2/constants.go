@@ -201,6 +201,7 @@ const (
 	MariaDBCustomConfigVolumeName       = "custom-config"
 	MariaDBTLSConfigCustom              = "custom"
 	MariaDBInitContainerName            = "mariadb-init"
+	MariaDBCoordinatorContainerName     = "md-coordinator"
 
 	// =========================== PostgreSQL Constants ============================
 	PostgresDatabasePortName       = "db"
