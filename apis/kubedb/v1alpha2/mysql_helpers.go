@@ -52,7 +52,23 @@ func (m MySQL) OffshootSelectors() map[string]string {
 		meta_util.NameLabelKey:      m.ResourceFQN(),
 		meta_util.InstanceLabelKey:  m.Name,
 		meta_util.ManagedByLabelKey: kubedb.GroupName,
+		MySQLNodeRoleDB:             MySQLNodeRoleSet,
 	}
+}
+
+func (m MySQL) RouterOffshootSelectors() map[string]string {
+	return map[string]string{
+		meta_util.NameLabelKey:      m.ResourceFQN(),
+		meta_util.InstanceLabelKey:  m.Name,
+		meta_util.ManagedByLabelKey: kubedb.GroupName,
+		MySQLNodeRoleRouter:         MySQLNodeRoleSet,
+	}
+}
+
+func (m MySQL) RouterOffshootLabels() map[string]string {
+	out := m.RouterOffshootSelectors()
+	out[meta_util.ComponentLabelKey] = ComponentDatabase
+	return meta_util.FilterKeys(kubedb.GroupName, out, m.Labels)
 }
 
 func (m MySQL) OffshootLabels() map[string]string {
@@ -96,7 +112,9 @@ func (m MySQL) GoverningServiceName() string {
 func (m MySQL) PrimaryServiceDNS() string {
 	return fmt.Sprintf("%s.%s.svc", m.ServiceName(), m.Namespace)
 }
-
+func (m MySQL) RouterPrimaryServiceDNS() string {
+	return fmt.Sprintf("%s.%s.svc", ResourceRouterMySQL, m.Namespace)
+}
 func (m MySQL) Hosts() []string {
 	replicas := 1
 	if m.Spec.Replicas != nil {
@@ -172,7 +190,15 @@ func (m MySQL) StatsServiceLabels() map[string]string {
 }
 
 func (m *MySQL) UsesGroupReplication() bool {
-	return m.Spec.Topology != nil && m.Spec.Topology.Mode != nil && (*m.Spec.Topology.Mode == MySQLClusterModeGroup || *m.Spec.Topology.Mode == InnoDBClusterModeGroup)
+	return m.Spec.Topology != nil &&
+		m.Spec.Topology.Mode != nil &&
+		*m.Spec.Topology.Mode == MySQLClusterModeGroup
+}
+
+func (m *MySQL) IsInnoDBCluster() bool {
+	return m.Spec.Topology != nil &&
+		m.Spec.Topology.Mode != nil &&
+		*m.Spec.Topology.Mode == InnoDBClusterModeGroup
 }
 
 func (m *MySQL) SetDefaults(topology *core_util.Topology) {
@@ -253,6 +279,7 @@ func (m *MySQL) SetTLSDefaults() {
 	m.Spec.TLS.Certificates = kmapi.SetMissingSecretNameForCertificate(m.Spec.TLS.Certificates, string(MySQLServerCert), m.CertificateName(MySQLServerCert))
 	m.Spec.TLS.Certificates = kmapi.SetMissingSecretNameForCertificate(m.Spec.TLS.Certificates, string(MySQLClientCert), m.CertificateName(MySQLClientCert))
 	m.Spec.TLS.Certificates = kmapi.SetMissingSecretNameForCertificate(m.Spec.TLS.Certificates, string(MySQLMetricsExporterCert), m.CertificateName(MySQLMetricsExporterCert))
+	m.Spec.TLS.Certificates = kmapi.SetMissingSecretNameForCertificate(m.Spec.TLS.Certificates, string(MySQLRouterCert), m.CertificateName(MySQLRouterCert))
 }
 
 func (m *MySQLSpec) GetPersistentSecrets() []string {
@@ -311,4 +338,7 @@ func (m *MySQL) MySQLTLSArgs() []string {
 		tlsArgs = append(tlsArgs, MySQLRequireSSLArg())
 	}
 	return tlsArgs
+}
+func (m *MySQL) GetRouterName() string {
+	return fmt.Sprintf("%s-router", m.Name)
 }
